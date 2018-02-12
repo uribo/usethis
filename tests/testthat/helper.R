@@ -1,3 +1,12 @@
+## proactively delete .Rproj files in session temp directory, because the check
+## for nested projects fails for a huge number of tests when such a file is
+## present
+pre_existing_Rproj <-
+  list.files(dirname(tempdir()), pattern = "Rproj$", full.names = TRUE)
+if (length(pre_existing_Rproj) > 0) {
+  file.remove(pre_existing_Rproj)
+}
+
 scoped_temporary_package <- function(dir = tempfile(),
                                      env = parent.frame(),
                                      rstudio = FALSE) {
